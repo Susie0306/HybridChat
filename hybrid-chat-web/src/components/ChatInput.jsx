@@ -10,27 +10,32 @@ import {
 import EmojiPicker from "emoji-picker-react";
 
 const FileUploadButton = ({
+  icon,
   type,
   accept,
   onSelect,
   isUploading,
   className = "",
-}) => (
-  <label
-    className={`cursor-pointer p-2 hover:bg-gray-100 rounded-full text-gray-500 flex items-center justify-center ${
-      isUploading ? "opacity-50 pointer-events-none" : ""
-    } ${className}`}
-  >
-    <input
-      type="file"
-      accept={accept}
-      className="hidden"
-      onChange={(e) => onSelect(e, type)}
-      disabled={isUploading}
-    />
-    <Icon className="w-6 h-6" />
-  </label>
-);
+}) => {
+  const Icon = icon;
+
+  return (
+    <label
+      className={`cursor-pointer p-2 hover:bg-gray-100 rounded-full text-gray-500 flex items-center justify-center ${
+        isUploading ? "opacity-50 pointer-events-none" : ""
+      } ${className}`}
+    >
+      <input
+        type="file"
+        accept={accept}
+        className="hidden"
+        onChange={(e) => onSelect(e, type)}
+        disabled={isUploading}
+      />
+      {Icon && <Icon className="w-6 h-6" />}
+    </label>
+  );
+};
 
 export default function ChatInput({
   onSendMessage,
@@ -39,7 +44,7 @@ export default function ChatInput({
 }) {
   const [inputVal, setInputVal] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
-  const [showPlusMenu, setShowPlusMenu] = useState(false); // [新增] 控制加号菜单
+  const [showPlusMenu, setShowPlusMenu] = useState(false);
   const textareaRef = useRef(null);
 
   useEffect(() => {
