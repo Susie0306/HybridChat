@@ -3,10 +3,10 @@ import { Bridge } from "../utils/bridge";
 import { useAuth } from "@clerk/clerk-react";
 
 // 配置区域
-const USE_ANDROID_EMULATOR = false;
-const HOST_IP = USE_ANDROID_EMULATOR ? "10.0.2.2" : "localhost";
-const WS_URL = `ws://${HOST_IP}:8080`;
-const API_URL = `http://${HOST_IP}:8080`;
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
+// 自动推导 WebSocket 地址 (http -> ws, https -> wss)
+const WS_BASE = API_BASE.replace(/^http/, "ws");
 
 export function useChat(userId, userAvatar, roomId, deviceInfo) {
   const [messages, setMessages] = useState([]);
@@ -39,7 +39,7 @@ export function useChat(userId, userAvatar, roomId, deviceInfo) {
       return;
     }
 
-    const ws = new WebSocket(WS_URL);
+    const ws = new WebSocket(WS_BASE);
 
     ws.onopen = () => {
       console.log("WebSocket Connected");
@@ -94,7 +94,7 @@ export function useChat(userId, userAvatar, roomId, deviceInfo) {
     setIsUploading(true);
     try {
       const filename = encodeURIComponent(file.name);
-      const res = await fetch(`${API_URL}/upload?filename=${filename}`, {
+      const res = await fetch(`${API_BASE}/upload?filename=${filename}`, {
         method: "POST",
         body: file,
       });
@@ -121,7 +121,7 @@ export function useChat(userId, userAvatar, roomId, deviceInfo) {
 
     try {
       const res = await fetch(
-        `${API_URL}/history?roomId=${roomId}&limit=20&beforeTimestamp=${oldestTimestamp}`
+        `${API_BASE}/history?roomId=${roomId}&limit=20&beforeTimestamp=${oldestTimestamp}`
       );
       const history = await res.json();
 
@@ -152,7 +152,7 @@ export function useChat(userId, userAvatar, roomId, deviceInfo) {
     if (!keyword.trim()) return;
     try {
       const res = await fetch(
-        `${API_URL}/search?roomId=${roomId}&q=${encodeURIComponent(keyword)}`
+        `${API_BASE}/search?roomId=${roomId}&q=${encodeURIComponent(keyword)}`
       );
       const data = await res.json();
       setSearchResults(data);
