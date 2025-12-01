@@ -1,6 +1,5 @@
 require("dotenv").config();
 const dbUrl = process.env.DATABASE_URL || "未定义";
-console.log("🔍 当前使用的数据库地址:", dbUrl.substring(0, 30) + "...");
 const http = require("http");
 const WebSocket = require("ws");
 const { setupWebSocket } = require("./chatService");
