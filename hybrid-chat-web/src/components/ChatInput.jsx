@@ -48,7 +48,7 @@ export default function ChatInput({
   return (
     <>
       {showEmoji && (
-        <div className="absolute bottom-16 left-2 z-30 shadow-2xl rounded-xl">
+        <div className="absolute bottom-20 left-2 z-30 shadow-2xl rounded-xl">
           <EmojiPicker
             onEmojiClick={onEmojiClick}
             width={300}
@@ -59,10 +59,10 @@ export default function ChatInput({
         </div>
       )}
 
-      <div className="bg-white px-4 py-3 border-t border-gray-200 flex items-end space-x-2">
+      <div className="bg-white px-3 py-3 border-t border-gray-200 flex items-end space-x-2 w-full max-w-[100vw] box-border pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
         <button
           onClick={() => setShowEmoji(!showEmoji)}
-          className={`p-2 rounded-full transition ${
+          className={`p-2 rounded-full transition flex-shrink-0 ${
             showEmoji
               ? "bg-yellow-100 text-yellow-600"
               : "hover:bg-gray-100 text-gray-500"
@@ -71,7 +71,7 @@ export default function ChatInput({
           <Smile className="w-6 h-6" />
         </button>
 
-        <div className="flex space-x-1">
+        <div className="flex space-x-1 flex-shrink-0">
           <label
             className={`cursor-pointer p-2 hover:bg-gray-100 rounded-full text-gray-500 ${
               isUploading ? "opacity-50 pointer-events-none" : ""
@@ -88,7 +88,7 @@ export default function ChatInput({
           </label>
 
           <label
-            className={`cursor-pointer p-2 hover:bg-gray-100 rounded-full text-gray-500 ${
+            className={`cursor-pointer p-2 hover:bg-gray-100 rounded-full text-gray-500 hidden sm:block ${
               isUploading ? "opacity-50 pointer-events-none" : ""
             }`}
           >
@@ -118,13 +118,13 @@ export default function ChatInput({
           </label>
         </div>
 
-        <div className="flex-1 bg-gray-100 rounded-xl px-4 py-2 flex items-center">
+        <div className="flex-1 bg-gray-100 rounded-xl px-4 py-2 flex items-center min-w-0">
           <textarea
             ref={textareaRef}
             className="bg-transparent flex-1 outline-none text-sm text-gray-800 placeholder-gray-400 resize-none scrollbar-hide"
             style={{ minHeight: "24px", maxHeight: "120px", overflowY: "auto" }}
             rows={1}
-            placeholder="发送消息...(Shift+Enter 换行)"
+            placeholder="发送..."
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
             onFocus={() => setShowEmoji(false)}
@@ -139,7 +139,7 @@ export default function ChatInput({
         <button
           onClick={handleSend}
           disabled={!inputVal.trim()}
-          className="bg-blue-400 text-white p-2 rounded-full hover:bg-blue-500 disabled:bg-blue-200 transition shadow-md"
+          className="bg-blue-400 text-white p-2 rounded-full hover:bg-blue-500 disabled:bg-blue-200 transition shadow-md flex-shrink-0"
         >
           <Send className="w-5 h-5" />
         </button>

@@ -26,11 +26,11 @@ export default function ChatHeader({
   };
 
   return (
-    <header className="bg-white shadow px-4 py-3 flex items-center justify-between sticky top-0 z-10 h-14">
+    <header className="bg-white shadow px-4 py-3 pt-[env(safe-area-inset-top)] flex items-center justify-between sticky top-0 z-10 w-full box-border min-h-[3.5rem]">
       {showSearch ? (
         <form
           onSubmit={handleSearchSubmit}
-          className="flex-1 flex items-center"
+          className="flex-1 flex items-center mt-2"
         >
           <input
             autoFocus
@@ -44,7 +44,7 @@ export default function ChatHeader({
           </button>
         </form>
       ) : (
-        <>
+        <div className="flex items-center justify-between w-full mt-1">
           <div className="flex items-center space-x-3">
             <button className="p-1 rounded-full hover:bg-gray-100">
               <ArrowLeft
@@ -71,7 +71,7 @@ export default function ChatHeader({
             </button>
             <UserButton afterSignOutUrl="/" />
           </div>
-        </>
+        </div>
       )}
     </header>
   );
