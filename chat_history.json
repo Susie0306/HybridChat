@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1764330157363719337928313289",
+    "type": "text",
+    "content": "你好，我叫UserA",
+    "userId": "UserB",
+    "roomId": "group1",
+    "timestamp": 1764330157363,
+    "deviceInfo": "Web-Browser-Dev-897"
+  },
+  {
+    "id": "17643301755853941674777504156",
+    "type": "text",
+    "content": "你好，我才是UserA",
+    "userId": "UserA",
+    "roomId": "group1",
+    "timestamp": 1764330175585,
+    "deviceInfo": "Web-Browser-Dev-853"
+  }
+]
