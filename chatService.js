@@ -207,9 +207,10 @@ function broadcast(wss, msg) {
     }
   });
 }
-
+// 广播用户列表 (发送对象数组，包含头像)
 function broadcastUserList(wss, roomId) {
-  const users = [];
+  const usersMap = new Map();
+
   wss.clients.forEach((client) => {
     const clientData = clients.get(client);
     if (
@@ -218,13 +219,21 @@ function broadcastUserList(wss, roomId) {
       clientData.isAuthenticated &&
       clientData.roomId === roomId
     ) {
-      users.push(clientData.userId);
+      // 使用 Map 以 userId 为键进行去重
+      // 如果同一个用户多端登录，这里会保留其中一个的信息
+      usersMap.set(clientData.userId, {
+        userId: clientData.userId,
+        userAvatar: clientData.userAvatar || "",
+      });
     }
   });
-  const uniqueUsers = [...new Set(users)];
+
+  // 将 Map 转为数组
+  const uniqueUsers = Array.from(usersMap.values());
+
   const msg = {
     type: "users_update",
-    users: uniqueUsers,
+    users: uniqueUsers, // 对象数组: [{userId: "...", userAvatar: "..."}, ...]
     roomId: roomId,
   };
 
